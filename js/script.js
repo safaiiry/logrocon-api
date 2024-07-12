@@ -9,12 +9,14 @@ const closeBtn = document.querySelector(".close-modal-btn");
 
 
 let name;
+let isLoad;
 let startingIndex = 0;
 let endingIndex = 5;
 let recipeDataArr = [];
 let recipeModalArr = [];
 let directions = [];
 let ingredients = [];
+
 
 let mask = document.querySelector('.mask');
 
@@ -51,7 +53,7 @@ fetch('https://jellybellywikiapi.onrender.com/api/Recipes?pageIndex=3')
 
 
 const getDataById = (id) => {
-    var isLoad = false;
+    isLoad = false;
     mask.classList.remove("hide");
     modalWindow.classList.add("hide");
     fetch(`https://jellybellywikiapi.onrender.com/api/Recipes/${id}`)
