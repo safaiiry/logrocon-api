@@ -4,15 +4,21 @@ let ingredientsContainer = document.querySelector(".ingredients-content");
 let directionsContainer = document.querySelector(".directions-content");
 const loadMoreBtn = document.getElementById('load-more-btn');
 const modal = document.querySelector(".modal-overlay");
+const modalWindow = document.querySelector(".modal-wrapper");
 const closeBtn = document.querySelector(".close-modal-btn");
 
+
 let name;
+let isLoad;
 let startingIndex = 0;
 let endingIndex = 5;
 let recipeDataArr = [];
 let recipeModalArr = [];
 let directions = [];
 let ingredients = [];
+
+
+let mask = document.querySelector('.mask');
 
 fetch('https://jellybellywikiapi.onrender.com/api/Recipes') 
     .then((res) => res.json())
@@ -47,13 +53,21 @@ fetch('https://jellybellywikiapi.onrender.com/api/Recipes?pageIndex=3')
 
 
 const getDataById = (id) => {
+    isLoad = false;
+    mask.classList.remove("hide");
+    modalWindow.classList.add("hide");
     fetch(`https://jellybellywikiapi.onrender.com/api/Recipes/${id}`)
     .then((res) => res.json())
     .then((data) => {
         recipeModalArr = data;
         directions = data.directions;
         ingredients = data.ingredients;
-        displayRecipeById(ingredients, directions)
+        isLoad = true;
+        if (isLoad) {
+            mask.classList.add("hide");
+            modalWindow.classList.remove("hide");
+            displayRecipeById(ingredients, directions);
+        }
       })
     .catch(
         (err) => console.error(`There was an error: ${err}`));
@@ -102,10 +116,12 @@ const fetchMoreRecipes = () => {
 function openModal(id) {
     modal.classList.remove("hide");
     getDataById(id);
-
+    document.body.style.overflow = 'hidden';
+    
 }
 
 function closeModal(e, clickedOutside) {
+    document.body.style.overflow = '';
     if (clickedOutside) {
         if (e.target.classList.contains("modal-overlay"))
             modal.classList.add("hide");
@@ -127,5 +143,8 @@ function cleanModal() {
 
 }
 
+
+
 closeBtn.addEventListener("click", closeModal);
 loadMoreBtn.addEventListener('click', fetchMoreRecipes);
+
