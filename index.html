@@ -6,14 +6,17 @@
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
+    
     <h1 class="title">Jelly Belly Recipes</h1>
 
-    <main>
-      <div id="recipe-container"></div>
-      <button class="btn" id="load-more-btn">Load More Recipes</button>
-    </main>
+    
+    <div id="recipe-container"></div>
+    <button class="btn" id="load-more-btn">Load More Recipes</button>
     
     <div class="modal-overlay hide">
+      <div class="mask">
+        <div class="loader"></div>
+      </div>
         <div class="modal-wrapper">
             <div class="close-btn-wrapper">
                 <button class="close-modal-btn">
